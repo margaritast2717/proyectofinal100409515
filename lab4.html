@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <link href="estilo.css" rel="stylesheet" type="text/css">
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.9.2/themes/blitzer/jquery-ui.css" />
+
+  <style>
+    body {
+
+      background: url(Fondo-Azul.jpeg);
+    }
+
+    .ui-menu {
+      width: 150px;
+    }
+    h1{
+
+      color: black;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <script>
+    $(function () {
+
+      var data = {
+        menu: [{
+          name: 'Mantenimiento',
+          link: '0',
+          sub: [{
+            name: 'Catalogo de Cuentas',
+            link: '0-0',
+            sub: null
+          }, {
+            name: 'Entradas de Diario',
+            link: '0-1',
+            sub: null
+          }]
+        }, {
+          name: 'Reportes',
+          link: '1',
+          sub: [{
+            name: 'Estados Financieros',
+            link: '1-1',
+            sub: [{
+              name: 'Estado de Resultados',
+              link: '1-1-2',
+              sub: null
+            }, {
+              name: 'Estado de Situacion Finaciera',
+              link: '1-1-3',
+              sub: null
+            }, {
+              name: 'Estado de Flujo de Efectivo',
+              link: '1-1-3',
+              sub: null
+            }]
+          }, {
+            name: 'Mantenimiento de Cuentas',
+            link: '1-2',
+            sub: null
+          }]
+        }, {
+          name: 'Consultas',
+          link: '3',
+          sub: null
+        }, {
+          name: 'Utilitarios',
+          link: '4',
+          sub: null
+        }]
+      };
+      var getMenuItem = function (itemData) {
+        var item = $("<li>")
+          .append(
+            $("<a>", {
+              href: '#' + itemData.link,
+              html: itemData.name
+            }));
+        if (itemData.sub) {
+          var subList = $("<ul>");
+          $.each(itemData.sub, function () {
+            subList.append(getMenuItem(this));
+          });
+          item.append(subList);
+        }
+        return item;
+      };
+
+      var $menu = $("#menu");
+      $.each(data.menu, function () {
+        $menu.append(
+          getMenuItem(this)
+        );
+      });
+      $menu.menu();
+    });
+
+  </script>
+  <h1>Menu Dinamico Con una estructura Json</h1>
+  <ul id="menu"></ul>
+  <script type="text/javascript" src="codigo.js"></script>
+
+
+</body>
+
+</html>
